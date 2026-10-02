@@ -8,7 +8,7 @@
 
 ## Build
 
-Clone this repo. Needs `gcc` and the Vulkan headers (`vulkan-headers` on Arch).
+Clone this repo. Needs `gcc` and the Vulkan headers (`vulkan-headers` on Arch/CachyOS and Fedora, `libvulkan-dev` on Debian/Ubuntu).
 
 ```
 gcc -shared -fPIC -O2 -o libVkLayer_mgo_budget_fake.so vk_budget_fake.c
@@ -31,3 +31,7 @@ My full line:
 ```
 MGO_BUDGET_FAKE_MIB=24000 MGO_BUDGET_FAKE_OVERSIZE=1 VK_ADD_LAYER_PATH=/path/to/that/folder VK_LOADER_LAYERS_ENABLE=VK_LAYER_MGO_budget_fake DXVK_CONFIG="dxvk.maxMemoryBudget=13500;d3d11.cachedDynamicResources=c" PROTON_FSR4_UPGRADE=1 %command%
 ```
+
+## License
+
+GPL-3.0, see `LICENSE`.
