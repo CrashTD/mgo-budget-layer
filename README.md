@@ -6,6 +6,8 @@
 
 **Workaround:** a tiny Vulkan layer that only rewrites `heapBudget` of the VRAM heap in `vkGetPhysicalDeviceMemoryProperties2`. Nothing else changes. DXVK still caps its own allocations, so set `dxvk.maxMemoryBudget` as well (13500 on a 16 GB card, see the Discord post).
 
+**Result:** roughly double the frame rate. Skyrim VR (MGO) at 2724x2853 per eye (WiVRn 132 % = VD Ultra), 90 Hz, FSR4 Ultra Performance, same spot: **37 fps without the layer** (CSX stuck at native res), **75 fps with it**.
+
 ## Build
 
 Clone this repo. Needs `gcc` and the Vulkan headers (`vulkan-headers` on Arch/CachyOS and Fedora, `libvulkan-dev` on Debian/Ubuntu).
