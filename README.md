@@ -2,7 +2,7 @@
 
 > Not a coder – Claude wrote most of it, I only tested it on my rig. If it sets your PC on fire, blame the robot. 😉
 
-**Problem:** Community Shaders (CSX) checks the DXGI memory budget before it switches to its scaled render targets (Render Scale / FSR4). Under Proton that number comes from DXVK, which takes it from `VK_EXT_memory_budget`, and it's too low. CSX then silently falls back to native resolution and FSR4 costs more than it saves.
+**Problem:** Community Shaders (CSX) checks the DXGI memory budget before it switches to its scaled render targets (Render Scale / FSR4). Under Proton that number comes from DXVK, which passes on the `VK_EXT_memory_budget` value unchanged, and it's too low for two reasons: on RADV the budget is the VRAM size minus what other processes hold (desktop, compositor, VR runtime), and the usage side also counts Proton's separate FSR4 device (vkd3d, ~1.5 GB) in the same process. On a 16 GB card CSX saw e.g. 14110 MiB used of a 14734 MiB budget (96 %), which it treats as critical. CSX then silently falls back to native resolution and FSR4 costs more than it saves.
 
 **Workaround:** a tiny Vulkan layer that only rewrites `heapBudget` of the VRAM heap in `vkGetPhysicalDeviceMemoryProperties2`. Nothing else changes. DXVK still caps its own allocations, so set `dxvk.maxMemoryBudget` as well (13500 on a 16 GB card, see the Discord post).
 
